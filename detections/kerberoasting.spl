@@ -1,0 +1,33 @@
+```
+Detection: Kerberoasting (RC4 service ticket requests)
+MITRE ATT&CK: T1558.003 - Steal or Forge Kerberos Tickets: Kerberoasting
+Data source: Windows Security Event Log (index=winlogs)
+Origin: gap identified during purple-team exercise (see ../attack-log.md Run 1)
+
+Logic: TGS requests (4769) using RC4 encryption (0x17) are abnormal in a
+modern domain (AES should be the default) and are the classic Kerberoasting
+signature — an attacker requesting service tickets offline-crackable for
+the service account's password.
+```
+
+index=winlogs EventCode=4769 Ticket_Encryption_Type=0x17
+| stats count by Account_Name, Service_Name, src_ip
+| where count > 3
+
+```
+False positives:
+- Legacy applications/service accounts still configured for RC4 (should be
+  remediated, but exists in real environments)
+- Domain controllers doing routine ticket renewal for legacy-compatible
+  service accounts
+
+Analyst triage:
+1. Check if Service_Name corresponds to a known legacy app with a
+   documented RC4 requirement — if so, this is a config-hygiene finding,
+   not an active attack (still worth a ticket to force AES)
+2. If the requesting account is requesting tickets for MANY different
+   service accounts in a short window: high-confidence Kerberoasting,
+   escalate immediately
+3. Recommend remediation: enforce AES-only Kerberos encryption via GPO
+   (Network security: Configure encryption types allowed for Kerberos)
+```
