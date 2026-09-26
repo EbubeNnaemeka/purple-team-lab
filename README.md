@@ -1,5 +1,7 @@
 # Purple Team Lab — Attack Simulation & Detection Validation
 
+**Status:** Planned: needs the AD lab running. The Kerberoasting detection has been fixed and tested in Splunk (see [siem-detection-lab tuning log](https://github.com/EbubeNnaemeka/siem-detection-lab/blob/main/docs/tuning-log.md)).
+
 Combines the [Active Directory lab](https://github.com/EbubeNnaemeka/active-directory-lab) and [SIEM detection lab](https://github.com/EbubeNnaemeka/siem-detection-lab): simulates real attacker techniques against the AD environment using Atomic Red Team, then validates whether the Splunk detections actually catch them — closing the loop between building infrastructure and defending it.
 
 ## Why this project
@@ -57,3 +59,7 @@ The SIEM lab has no Kerberoasting rule, so this test is expected to expose a gap
 ## Safety note
 
 All testing was performed in an isolated, host-only-networked lab with no connection to production systems or the internet-facing network, using disposable VM snapshots reverted after each test run.
+
+---
+
+Part of my homelab portfolio: **[ebube-nnaemeka.pages.dev](https://ebube-nnaemeka.pages.dev)** · [All projects](https://github.com/EbubeNnaemeka)

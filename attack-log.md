@@ -39,7 +39,7 @@ index=winlogs source="*Sysmon*" EventCode=10 TargetImage="*lsass.exe"
 | table _time, SourceImage, TargetImage, GrantedAccess
 ```
 
-**Note:** the trimmed Sysmon config in the SIEM lab does not include a ProcessAccess rule yet. Add one for `lsass.exe` before this run, or expect no telemetry.
+**Prerequisite:** the SIEM lab's Sysmon config logs `ProcessAccess` (Event ID 10) for `lsass.exe`, so this telemetry should appear once that config is installed.
 
 **Date run:** _fill in_
 **Result:** _fill in_
